@@ -42,7 +42,7 @@ RUN apt-get update -q; \
       libxml2-dev libxslt1-dev \
       zlib1g-dev \
       libzip-dev \
-      procps \g
+      procps \
       default-jdk default-jre \
       elasticsearch=7.10.2
 
