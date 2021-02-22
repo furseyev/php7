@@ -16,7 +16,12 @@ COPY ./config/etc/apt/sources.list.d/yarn.list /etc/apt/sources.list.d/yarn.list
 RUN curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 COPY ./config/etc/apt/sources.list.d/nodesource.list /etc/apt/sources.list.d/nodesource.list
 
+# Repository: ElasticSearch
+RUN curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+COPY ./config/etc/apt/sources.list.d/elastic-7.x.list /etc/apt/sources.list.d/elastic-7.x.list
+
 # Upgrade/install packages
+RUN mkdir -p /usr/share/man/man1
 RUN apt-get update -q; \
     apt-get upgrade -qy; \
     DEBIAN_FRONTEND=noninteractive apt-get install -qy \
@@ -36,7 +41,11 @@ RUN apt-get update -q; \
       libpng-dev \
       libxml2-dev libxslt1-dev \
       zlib1g-dev \
-      libzip-dev
+      libzip-dev \
+      procps \g
+      default-jdk default-jre \
+      elasticsearch=7.10.2
+
 RUN docker-php-ext-install -j$(nproc) bcmath intl opcache pdo_mysql soap xsl zip iconv sockets
 RUN pecl install mcrypt-1.0.3
 RUN docker-php-ext-enable mcrypt
