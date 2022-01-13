@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 MAINTAINER Ihor Furseyev <i.furseyev@atwix.com>
 
 # Pre-repository setup: Add support for HTTPS repositories
