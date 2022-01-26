@@ -40,7 +40,7 @@ RUN apt-get update -q; \
 RUN docker-php-ext-install -j$(nproc) bcmath intl opcache pdo_mysql soap xsl zip iconv sockets
 RUN pecl install mcrypt-1.0.3
 RUN docker-php-ext-enable mcrypt
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 RUN pecl install xdebug-2.9.2
 RUN apt-get clean -qy; \
