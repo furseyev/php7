@@ -39,6 +39,7 @@ RUN apt-get update -q; \
       libjpeg62-turbo-dev \
       libmcrypt-dev \
       libpng-dev \
+      libwebp-dev \
       libxml2-dev libxslt1-dev \
       zlib1g-dev \
       libzip-dev \
@@ -49,7 +50,7 @@ RUN apt-get update -q; \
 RUN docker-php-ext-install -j$(nproc) bcmath intl opcache pdo_mysql soap xsl zip iconv sockets
 RUN pecl install mcrypt-1.0.3
 RUN docker-php-ext-enable mcrypt
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) gd
 RUN pecl install xdebug-2.9.2
 RUN apt-get clean -qy; \
