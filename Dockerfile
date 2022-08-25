@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.1-fpm
 MAINTAINER Ihor Furseyev <i.furseyev@atwix.com>
 
 # Pre-repository setup: Add support for HTTPS repositories
@@ -48,11 +48,11 @@ RUN apt-get update -q; \
       elasticsearch=7.10.2
 
 RUN docker-php-ext-install -j$(nproc) bcmath intl opcache pdo_mysql soap xsl zip iconv sockets
-RUN pecl install mcrypt-1.0.3
+RUN pecl install mcrypt-1.0.5
 RUN docker-php-ext-enable mcrypt
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) gd
-RUN pecl install xdebug-2.9.2
+RUN pecl install xdebug-3.2.0alpha3
 RUN apt-get clean -qy; \
     rm -f /etc/nginx/sites-enabled/default; \
     ln -sf /dev/stdout /var/log/nginx/access.log; \
@@ -62,7 +62,7 @@ RUN apt-get clean -qy; \
 
 # Install extra helper stuff
 COPY src/wait-for-port /usr/local/bin/wait-for-port
-RUN curl -sL https://getcomposer.org/download/1.10.10/composer.phar -o /usr/local/bin/composer
+RUN curl -sL https://getcomposer.org/download/2.3.10/composer.phar -o /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 RUN curl -sL https://files.magerun.net/n98-magerun2-2.1.2.phar -o /usr/local/bin/n98-magerun2
 RUN chmod +x /usr/local/bin/n98-magerun2
