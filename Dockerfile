@@ -55,9 +55,9 @@ RUN apt-get clean -qy; \
 
 # Install extra helper stuff
 COPY src/wait-for-port /usr/local/bin/wait-for-port
-RUN curl -sL https://getcomposer.org/download/2.3.10/composer.phar -o /usr/local/bin/composer
+RUN curl -sL https://getcomposer.org/download/2.2.17/composer.phar -o /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
-RUN curl -sL https://files.magerun.net/n98-magerun2-2.1.2.phar -o /usr/local/bin/n98-magerun2
+RUN curl -sL https://files.magerun.net/n98-magerun2-5.2.0.phar -o /usr/local/bin/n98-magerun2
 RUN chmod +x /usr/local/bin/n98-magerun2
 
 # Install config files and tester site
