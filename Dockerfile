@@ -1,5 +1,5 @@
 FROM php:8.1-fpm
-MAINTAINER Ihor Furseyev <i.furseyev@atwix.com>
+MAINTAINER Atwix Team <service@atwix.com>
 
 # Pre-repository setup: Add support for HTTPS repositories
 RUN apt-get update -q; \
@@ -20,7 +20,7 @@ COPY ./config/etc/apt/sources.list.d/nodesource.list /etc/apt/sources.list.d/nod
 RUN apt-get update -q; \
     apt-get upgrade -qy; \
     DEBIAN_FRONTEND=noninteractive apt-get install -qy \
-      bash supervisor \
+      bash sudo supervisor \
       build-essential \
       curl htop git vim wget \
       nginx-extras mariadb-client redis-tools \
@@ -52,6 +52,15 @@ RUN apt-get clean -qy; \
     ln -sf /dev/stderr /var/log/nginx/error.log; \
     rm -rf /var/lib/apt; \
     rm -rf /usr/src/php
+
+# Install NewRelic Agent
+RUN \
+  cd /tmp && wget -r -l1 -nd -A"linux.tar.gz" https://download.newrelic.com/php_agent/release/ && \
+  gzip -dc newrelic*.tar.gz | tar xf -  && \
+  export NR_INSTALL_USE_CP_NOT_LN=1 && \
+  export NR_INSTALL_SILENT=1 && \
+  /tmp/newrelic-php5-*/newrelic-install install && \
+  rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
 
 # Install extra helper stuff
 COPY src/wait-for-port /usr/local/bin/wait-for-port
